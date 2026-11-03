@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>地平線でGO！ ― 難読ルビ当てクイズ（ファンメイド）</title>
+  <meta name="description" content="Sound Horizon / Linked Horizon の歌詞に登場する独自の当て字・難読ルビを当てる非公式ファンメイドクイズゲーム。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Cinzel:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="bg-glow bg-glow--a"></div>
+    <div class="bg-glow bg-glow--b"></div>
+    <canvas id="stars"></canvas>
+  </div>
+
+  <main class="app">
+    <!-- タイトル画面 -->
+    <section id="screen-title" class="screen is-active" aria-labelledby="title-heading">
+      <p class="eyebrow">Unofficial Fan Quiz</p>
+      <h1 id="title-heading" class="logo">
+        <span class="logo-ruby">Horizon</span>
+        <span class="logo-main">地平線でGO！</span>
+      </h1>
+      <p class="lead">その漢字、何と<em>詠む</em>？<br />歌詞に刻まれた独自のルビを当てよ。</p>
+
+      <div class="mode-list" role="radiogroup" aria-label="出題モード">
+        <button class="mode-btn is-selected" id="mode-all" data-mode="ALL" role="radio" aria-checked="true">
+          <span class="mode-name">全地平線</span><span class="mode-sub">ALL</span>
+        </button>
+        <button class="mode-btn" id="mode-sh" data-mode="SH" role="radio" aria-checked="false">
+          <span class="mode-name">Sound Horizon</span><span class="mode-sub">SH</span>
+        </button>
+        <button class="mode-btn" id="mode-lh" data-mode="LH" role="radio" aria-checked="false">
+          <span class="mode-name">Linked Horizon</span><span class="mode-sub">LH</span>
+        </button>
+      </div>
+
+      <button id="btn-start" class="btn btn--primary">物語を始める</button>
+      <p class="highscore">ハイスコア：<span id="highscore">0</span></p>
+    </section>
+
+    <!-- ゲーム画面 -->
+    <section id="screen-game" class="screen" aria-label="クイズ">
+      <header class="hud">
+        <div class="hud-item"><span class="hud-label">QUESTION</span><span id="q-count" class="hud-value">1 / 20</span></div>
+        <div class="hud-item"><span class="hud-label">COMBO</span><span id="combo" class="hud-value">0</span></div>
+        <div class="hud-item"><span class="hud-label">SCORE</span><span id="score" class="hud-value">0</span></div>
+      </header>
+
+      <div class="timer" aria-hidden="true"><div id="timer-bar" class="timer-bar"></div></div>
+
+      <div id="card" class="card">
+        <span id="q-artist" class="tag">SH</span>
+        <p id="q-work" class="work-info"></p>
+        <div class="kanji-wrap">
+          <span id="q-ruby" class="ruby"></span>
+          <h2 id="q-kanji" class="kanji">物語</h2>
+        </div>
+        <p id="q-hint" class="hint"></p>
+        <div id="q-result" class="result-pop" aria-live="polite"></div>
+      </div>
+
+      <form id="answer-form" class="answer" autocomplete="off">
+        <input id="answer-input" class="answer-input" type="text" placeholder="ルビを入力（かな / カナ / 英字）" aria-label="答え" />
+        <button id="btn-submit" class="btn btn--primary" type="submit">回答</button>
+      </form>
+      <div class="sub-actions">
+        <button id="btn-hint" class="btn btn--ghost" type="button">ヒント（-50%）</button>
+        <button id="btn-skip" class="btn btn--ghost" type="button">パス</button>
+      </div>
+    </section>
+
+    <!-- 結果画面 -->
+    <section id="screen-result" class="screen" aria-labelledby="result-heading">
+      <p class="eyebrow">Fin.</p>
+      <h2 id="result-heading" class="result-title">物語の終わり</h2>
+      <div class="result-score">
+        <span id="final-score" class="final-score">0</span>
+        <span class="final-label">POINTS</span>
+      </div>
+      <p id="result-rank" class="rank"></p>
+      <p id="new-record" class="new-record" hidden>✦ NEW RECORD ✦</p>
+      <ol id="result-list" class="result-list"></ol>
+      <div class="sub-actions">
+        <button id="btn-retry" class="btn btn--primary">もう一度</button>
+        <button id="btn-share" class="btn btn--ghost">Xでシェア</button>
+        <button id="btn-back" class="btn btn--ghost">タイトルへ</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    本作は非公式のファンメイド作品であり、Sound Horizon / Linked Horizon および関係各社とは一切関係ありません。
+  </footer>
+
+  <script src="js/questions.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
